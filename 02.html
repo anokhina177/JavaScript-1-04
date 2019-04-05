@@ -1,0 +1,203 @@
+<html>
+
+<head>
+    <title>Кто хочет стать миллионером?</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        var ANSWER_VARIANTS = ["A", "B", "C", "D"];
+        var QUESTIONS = [{
+                number: 1,
+                text: 'Где сидели А и Б?',
+                answers: ['на губе', 'в Караганде', 'на трубе', 'нигде'],
+                correct: 2,
+                prize: 500
+            },
+            {
+                number: 2,
+                text: 'Кто является братом краткости?',
+                answers: ['Талант', 'Труд', 'Мир', 'Май'],
+                correct: 0,
+                prize: 1000
+            },
+            {
+                number: 3,
+                text: 'Какой город является столицей Российской Федерации?',
+                answers: ['Москва', 'Лондон', 'Калининград', 'ТАГИИИЛ'],
+                correct: 0,
+                prize: 2000
+            },
+            {
+                number: 4,
+                text: 'Кто является режиссером фильма "Титаник"?',
+                answers: ['Леонардо ДиКаприо', 'Никита Михалков', 'Мартин Скорсезе', 'Джеймс Кэмерон'],
+                correct: 3,
+                prize: 3000
+            },
+            {
+                number: 5,
+                text: 'Кто написал "Трое в лодке не считая собаки?',
+                answers: ['Герберт Уэллс', 'Рэй Бредбери', 'Джером К. Джером', 'Стивен Кинг'],
+                correct: 2,
+                prize: 5000
+            },
+            {
+                number: 6,
+                text: 'Какой остров часто встречается в творчестве Поля Гогена?',
+                answers: ['Таити', 'Гаити', 'Баунти', 'Пасхи'],
+                correct: 1,
+                prize: 10000
+
+            },
+            {
+                number: 7,
+                text: 'Какая планета является пятой от Солнца?',
+                answers: ['Юпитер', 'Сатурн', 'Венера', 'Уран'],
+                correct: 0,
+                prize: 15000
+            },
+            {
+                number: 8,
+                text: 'Сколько ног было у Слейпнира, коня Одина?',
+                answers: ['2', '4', '6', '8'],
+                correct: 3,
+                prize: 25000
+            },
+            {
+                number: 9,
+                text: 'Какого цвета родстер Илона Моска, отправленный на Марс?',
+                answers: ['Пуансетии', 'Азалиевого минерала', 'Жженой охры', 'Полуночной вишни'],
+                correct: 3,
+                prize: 50000
+            },
+            {
+                number: 10,
+                text: 'Какой химический элемент открыла Мария Кюри?',
+                answers: ['Радий', 'Кадмий', 'Осмий', 'Висмут'],
+                correct: 0,
+                prize: 100000
+            },
+            {
+                number: 11,
+                text: 'Кто считается первым программистом в истории?',
+                answers: ['Грейс Хоппер', 'Екатерина Ющенко', 'Ада Лавлейс', 'Адель Голдберг'],
+                correct: 2,
+                prize: 200000
+            },
+            {
+                number: 12,
+                text: 'Кто был 12-м по счету Российским Императором?',
+                answers: ['Александр I', 'Александр II', 'Александр III', 'Николай II'],
+                correct: 1,
+                prize: 400000
+            },
+            {
+                number: 13,
+                text: 'Какое имя было у прототипа Д’Артаньяна из "Трех мушкетеров?',
+                answers: ['Луи', 'Жан', 'Шарль', 'Оливье'],
+                correct: 2,
+                prize: 800000
+            },
+            {
+                number: 14,
+                text: 'Какая актриса получила наибольшее количество Оскаров за главную роль?',
+                answers: ['Анджелина Джоли', 'Кэтрин Хепберн', 'Мерил Стрип', 'Катрин Денев'],
+                correct: 1,
+                prize: 1500000
+            },
+            {
+                number: 15,
+                text: 'Сколько всего звезд в созвездии Микроскоп?',
+                answers: ['5', '81', '9', '37'],
+                correct: 3,
+                prize: 3000000
+            }
+        ];
+        console.log(QUESTIONS);
+
+        var game = function (questions) {
+            let play = true;
+            let round = 0;
+            let outcome = null;
+
+            while (play == true && round < QUESTIONS.length) {
+                let quest = generateQuestion(questions, round);
+                let answer = prompt(quest.qText);
+                outcome = check(answer, round);
+                play = outcome.continue;
+                round++;
+            }
+            if (outcome.result) {
+                if (round < 15)
+                    alert(`Игра закончена! Ваш выигрыш составил: ${QUESTIONS[round-1].prize}`);
+                else
+                    alert(`********************************\n` +
+                        `\n` +
+                        `       Парам-пам-пам!\n` +
+                        `          Вы победили!         \n` +
+                        `\n` +
+                        `     Ваш выигрыш составил:    \n` +
+                        `       3 000 000  рублей       \n` +
+                        `********************************\n`);
+            } else {
+                prize_index = -1;
+                if (round - 1 > 9)
+                    prize_index = 9;
+                else if (round - 1 > 4)
+                    prize_index = 4;
+
+                if (prize_index > 0)
+                    alert(`Вы проиграли! Ваш выигрыш составил: ${QUESTIONS[prize_index].prize} рублей!`);
+                else
+                    alert("Вы проиграли! Вы ничего не выиграли!");
+            }
+
+        };
+
+        var generateQuestion = function (mas, qNumber) {
+            let answers = '';
+            for (let i = 0; i < 4; i++) {
+                answers = answers + ANSWER_VARIANTS[i] + ' - ' + mas[qNumber].answers[i] + '\n';
+            }
+
+            let text = mas[qNumber].text + '\n' + answers + 'Введите правильный ответ';
+
+            let right = mas[qNumber].correct;
+            return {
+                qText: text,
+                right: right
+            };
+        };
+
+        var check = function (answer, round) {
+            if (ANSWER_VARIANTS.indexOf(answer.toUpperCase()) == QUESTIONS[round].correct) {
+                if (round == 14)
+                    return {
+                        result: true,
+                        continue: false
+                    }
+                let msg = "";
+                if (round == 4 || round == 9)
+                    msg = "*** Вы достигли несгораемой суммы! ***";
+                reply = confirm(`Правильно!\n` +
+                    `Ваш выигрыш: ${QUESTIONS[round].prize} рублей!\n` +
+                    `${msg}\n` +
+                    `Хотите продолжить игру?`);
+                return {
+                    result: true,
+                    continue: reply
+                };
+            } else {
+                return {
+                    result: false,
+                    continue: false
+                };
+            }
+        };
+        game(QUESTIONS);
+    </script>
+
+</body>
+
+</html>
